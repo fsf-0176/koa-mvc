@@ -5,12 +5,13 @@ const { adminRouter } = require('./router');
 const { initDb } = require('./database');
 const static = require('koa-static');
 const app = new Koa()
+const koaBody = require('koa-body')
 const {SECRET,port,verifyPath} = require('./config')
 initDb()
 // 做你需要判断的事情
+app.use(koaBody());
 app.use(async (ctx, next) => {
-
-  if(ctx.header && ctx.header.authorization){
+  if(ctx.header){
     await next().catch(err=>{  
       console.log(err);
     })

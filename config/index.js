@@ -9,7 +9,7 @@ module.exports = {
   database: {
     host: "127.0.0.1",
     user: "root",
-    password: "root",
-    database: "gesida"
+    password: "123456",
+    database: "shop"
   }
 }
