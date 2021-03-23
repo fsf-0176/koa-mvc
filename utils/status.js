@@ -5,5 +5,12 @@ module.exports = {
             code: 4,
             msg
         }
+    },
+    success(ctx,msg){
+        ctx.status = 200,
+        ctx.body = {
+            code: 2,
+            msg
+        }
     }
 }

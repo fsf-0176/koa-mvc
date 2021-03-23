@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const payload = { user_name: 'Jack', id: 11, email: '123456@qq.com' };
 const token = jwt.sign(payload, SECRET, { expiresIn: '1h' })
 const os = require('os')
-const  {error}  = require('../../utils/status')
+const  {error,success}  = require('../../utils/status')
 module.exports = {
   async index(ctx) {
     const id = 8;
@@ -36,7 +36,12 @@ module.exports = {
       ip,
       create_time: Date.now() / 1000
     }
-    await adminService.register(data)
-    ctx.body = ctx.request.body
+    const result = await adminService.register(data)
+    console.log(result);
+    if(result.affectedRows){
+      success(ctx,result)
+    }else{
+      error(ctx,result.msg)
+    }
   }
 }
