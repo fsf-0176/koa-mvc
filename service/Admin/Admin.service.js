@@ -1,12 +1,14 @@
 
 const { adminModel } = require('../../model');
-const index = async (id) => {
-    return await adminModel.index(id)
-}
-const register = async (data) => {
-    return await adminModel.register(data);
-}
+
 module.exports = {
-    index,
-    register
+    async index() {
+        return await adminModel.index()
+    },
+    async register(data) {
+        return await adminModel.register(data);
+    },
+    async login(data){
+        return await adminModel.login(data);
+    }
 }

@@ -4,7 +4,7 @@ module.exports = {
   // 服务端口
   port: 3000,
   // jwt忽略验证路径
-  verifyPath: [/^\/login/, /^\/register/],
+  verifyPath: [/^\/login/, /^\/register/, /^\/admin\/register/, /^\/admin\/login/],
   // 数据库配置
   database: {
     host: "127.0.0.1",

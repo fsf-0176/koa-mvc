@@ -1,33 +1,44 @@
 const { adminService } = require('../../service');
 const { SECRET } = require('../../config'); // 获取配置文件密钥
 const jwt = require('jsonwebtoken');
-const payload = { user_name: 'Jack', id: 11, email: '123456@qq.com' };
-const token = jwt.sign(payload, SECRET, { expiresIn: '1h' })
 const os = require('os')
-const  {error,success}  = require('../../utils/status')
+const { error, success } = require('../../utils/status')
 module.exports = {
   async index(ctx) {
-    const id = 8;
-    console.log(123);
-    const data = 1111
-    //const data = await adminService.index(id);
-    ctx.body = data
+    const {goods,order,user,setting} = await adminService.index();
+    ctx.body = {goods,order,user,setting}
   },
-  login(ctx) {
-    console.log(99);
-    ctx.body = {
-      token
+  async login(ctx) {
+    const { username, password } = ctx.request.body
+    if (username.trim() === '') {
+      error(ctx, '用户名不能为空')
+      return
+    } else if (password.trim() === '') {
+      error(ctx, '密码不能为空')
+      return
     }
+    const data = { username, password }
+    const result = await adminService.login(data)
+    if (result && result.id) {
+      const payload = { username, password, id:result.id };
+      const token = jwt.sign(payload, SECRET, { expiresIn: '1h' })
+      ctx.body = {
+        token,
+        result
+      }
+      return
+    }
+    error(ctx,'用户不存在或者密码错误')
   },
   async register(ctx) {
     const interfaces = os.networkInterfaces()
     const ip = interfaces.WLAN[1].address
     const { username, password } = ctx.request.body
     if (username.trim() === '') {
-      error(ctx, { msg: '用户名不能为空' })
+      error(ctx, '用户名不能为空')
       return
-    }else if(password.trim() === ''){
-      error(ctx, { msg: '密码不能为空' })
+    } else if (password.trim() === '') {
+      error(ctx, '密码不能为空')
       return
     }
     const data = {
@@ -37,11 +48,10 @@ module.exports = {
       create_time: Date.now() / 1000
     }
     const result = await adminService.register(data)
-    console.log(result);
-    if(result.affectedRows){
-      success(ctx,result)
-    }else{
-      error(ctx,result.msg)
+    if (result.affectedRows) {
+      success(ctx, result)
+    } else {
+      error(ctx, result.msg)
     }
   }
 }
