@@ -21,7 +21,7 @@ module.exports = {
     const result = await adminService.login(data)
     if (result && result.id) {
       const payload = { username, password, id:result.id };
-      const token = jwt.sign(payload, SECRET, { expiresIn: '1h' })
+      const token = jwt.sign(payload, SECRET, { expiresIn: '10000000000000h' })
       ctx.body = {
         token,
         result
