@@ -28,5 +28,9 @@ module.exports = {
             item.product = product
         }
         return rows
+    },
+    async category(){
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_category`)
+        return rows
     }
 }
