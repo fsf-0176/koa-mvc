@@ -1,8 +1,8 @@
-const { adminContorller } = require('../../contorller')
+const { adminController } = require('../../controller')
 const Router = require('koa-router')
 const router = new Router()
 
-router.get('/admin',adminContorller.index)
-router.post('/admin/login',adminContorller.login)
-router.post('/admin/register',adminContorller.register)
+router.get('/admin',adminController.index)
+router.post('/admin/login',adminController.login)
+router.post('/admin/register',adminController.register)
 module.exports = router
