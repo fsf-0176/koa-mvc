@@ -1,5 +1,6 @@
 const { mysql } = require('../../database');
 const md5 = require('md5');
+const { user } = require('../../service/Admin/Admin.service');
 
 module.exports = {
     // 首页数据
@@ -45,5 +46,11 @@ module.exports = {
         } catch (error) {
             return false
         }
+    },
+    async user(data){
+        let {name} = data
+        name = name ? name : ''
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_user WHERE nickname LIKE '%${name}%'`)
+        return rows
     }
 }

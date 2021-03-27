@@ -32,5 +32,9 @@ module.exports = {
     async category(){
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_category`)
         return rows
+    },
+    async specification(){
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_specification WHERE id > 0`)
+        return rows
     }
 }

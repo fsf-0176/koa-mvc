@@ -6,5 +6,8 @@ module.exports = {
     },
     category(){
         return goodsModel.category()
+    },
+    specification(){
+        return goodsModel.specification()
     }
 }

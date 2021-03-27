@@ -53,5 +53,11 @@ module.exports = {
     } else {
       error(ctx, result.msg)
     }
+  },
+  async user(ctx){
+    const {name} = ctx.query
+    const data = {name}
+    const result = await adminService.user(data);
+    ctx.body = result
   }
 }

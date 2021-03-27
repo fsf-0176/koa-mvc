@@ -9,5 +9,9 @@ module.exports = {
     async category(ctx){
         const result = await goodsService.category()
         ctx.body = result
+    },
+    async specification(ctx){
+        const result = await goodsService.specification()
+        ctx.body = result
     }
 }
