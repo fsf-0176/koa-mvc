@@ -5,8 +5,8 @@ const os = require('os')
 const { error, success } = require('../../utils/status')
 module.exports = {
   async index(ctx) {
-    const {goods,order,user,setting} = await adminService.index();
-    ctx.body = {goods,order,user,setting}
+    const { goods, order, user, setting } = await adminService.index();
+    ctx.body = { goods, order, user, setting }
   },
   async login(ctx) {
     const { username, password } = ctx.request.body
@@ -20,7 +20,7 @@ module.exports = {
     const data = { username, password }
     const result = await adminService.login(data)
     if (result && result.id) {
-      const payload = { username, password, id:result.id };
+      const payload = { username, password, id: result.id };
       const token = jwt.sign(payload, SECRET, { expiresIn: '10000000000000h' })
       ctx.body = {
         token,
@@ -28,7 +28,7 @@ module.exports = {
       }
       return
     }
-    error(ctx,'用户不存在或者密码错误')
+    error(ctx, '用户不存在或者密码错误')
   },
   async register(ctx) {
     const interfaces = os.networkInterfaces()
@@ -54,10 +54,26 @@ module.exports = {
       error(ctx, result.msg)
     }
   },
-  async user(ctx){
-    const {name} = ctx.query
-    const data = {name}
+  async user(ctx) {
+    const { name } = ctx.query
+    const data = { name }
     const result = await adminService.user(data);
     ctx.body = result
+  },
+  async showSetting(ctx) {
+    const result = await adminService.showSetting()
+    ctx.body = result
+  },
+  async ad(ctx) {
+    const result = await adminService.ad()
+    ctx.body = result
+  },
+  async notice(ctx) {
+    const result = await adminService.notice()
+    ctx.body = result
+  },
+  async super(ctx){
+    const result = await adminService.super()
+    ctx.body =result
   }
 }

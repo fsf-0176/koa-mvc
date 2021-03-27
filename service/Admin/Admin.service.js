@@ -14,5 +14,17 @@ module.exports = {
     },
     async user(data){
         return await adminModel.user(data)
+    },
+    async showSetting(){
+        return await adminModel.showSetting()
+    },
+    async ad(){
+        return await adminModel.ad()
+    },
+    async notice(){
+        return await adminModel.notice()
+    },
+    async super(){
+        return await adminModel.super()
     }
 }

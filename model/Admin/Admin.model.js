@@ -52,5 +52,21 @@ module.exports = {
         name = name ? name : ''
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_user WHERE nickname LIKE '%${name}%'`)
         return rows
+    },
+    async showSetting(){
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_show_settings`);
+        return rows
+    },
+    async ad(){
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_ad WHERE is_delete = 0`)
+        return rows
+    },
+    async notice(){
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_notice`)
+        return rows
+    },
+    async super(){
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_admin WHERE is_delete = 0`)
+        return rows
     }
 }
