@@ -51,6 +51,9 @@ module.exports = {
         let {name} = data
         name = name ? name : ''
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_user WHERE nickname LIKE '%${name}%'`)
+        rows.forEach(item => {
+            item.nickname = Buffer.from(item.nickname,'base64').toString()
+        });
         return rows
     },
     async showSetting(){
