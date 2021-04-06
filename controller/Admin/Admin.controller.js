@@ -22,6 +22,7 @@ module.exports = {
     if (result && result.id) {
       const payload = { username, password, id: result.id };
       const token = jwt.sign(payload, SECRET, { expiresIn: '10000000000000h' })
+      ctx.status = 200
       ctx.body = {
         token,
         result
