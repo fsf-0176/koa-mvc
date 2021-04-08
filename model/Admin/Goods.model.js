@@ -5,9 +5,7 @@ module.exports = {
         const { page, name } = data
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_goods WHERE name LIKE '%${name}%'`)
         for (const item of rows) {
-            // console.log(item);
             let [info] = await mysql().execute(`SELECT * FROM hiolabs_category WHERE id = ? LIMIT 1`,[item.category_id])
-            // info = info[0]
             item.category_name = info.name;
             if (item.is_on_sale == 1) {
                 item.is_on_sale = true;
