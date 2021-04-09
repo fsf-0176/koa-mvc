@@ -56,8 +56,8 @@ module.exports = {
     }
   },
   async user(ctx) {
-    const { name } = ctx.query
-    const data = { name }
+    const { name, page, size } = ctx.query
+    const data = { name, page, size }
     const result = await adminService.user(data);
     ctx.body = result
   },
@@ -73,8 +73,8 @@ module.exports = {
     const result = await adminService.notice()
     ctx.body = result
   },
-  async super(ctx){
+  async super(ctx) {
     const result = await adminService.super()
-    ctx.body =result
+    ctx.body = result
   }
 }

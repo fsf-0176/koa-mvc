@@ -6,15 +6,15 @@ module.exports = {
     // 首页数据
     async index(id) {
         try {
-            const [goods] = await mysql().execute("SELECT COUNT(`id`) AS `goods` FROM `hiolabs_goods` WHERE `is_on_sale` = ? AND `is_delete` = ?",[1,0])
-            const [order] = await mysql().execute("SELECT COUNT(`id`) AS `order` FROM `hiolabs_order` WHERE `order_status` = ? ",[300])
+            const [goods] = await mysql().execute("SELECT COUNT(`id`) AS `goods` FROM `hiolabs_goods` WHERE `is_on_sale` = ? AND `is_delete` = ?", [1, 0])
+            const [order] = await mysql().execute("SELECT COUNT(`id`) AS `order` FROM `hiolabs_order` WHERE `order_status` = ? ", [300])
             const [user] = await mysql().execute('SELECT COUNT(`id`) AS `user` FROM `hiolabs_user`')
             const [setting] = await mysql().execute("SELECT `countdown` FROM `hiolabs_settings`")
             return {
-                goods:goods[0].goods,
-                order:order[0].order,
-                user:user[0].user,
-                setting:setting[0].countdown
+                goods: goods[0].goods,
+                order: order[0].order,
+                user: user[0].user,
+                setting: setting[0].countdown
             }
         } catch (error) {
             return error
@@ -41,34 +41,39 @@ module.exports = {
     async login(data) {
         const { username, password } = data
         try {
-            const [rows] = await mysql().execute("SELECT `username`,`password`,`id`,`last_login_time` FROM   `hiolabs_admin` WHERE `username` = ? AND `password` = ? ",[username,md5(password)])
+            const [rows] = await mysql().execute("SELECT `username`,`password`,`id`,`last_login_time` FROM   `hiolabs_admin` WHERE `username` = ? AND `password` = ? ", [username, md5(password)])
             return rows[0]
         } catch (error) {
             return false
         }
     },
-    async user(data){
-        let {name} = data
+    async user(data) {
+        console.log(data);
+        let { page, name, size: Size } = data
+        page = parseInt(page) || 1
+        const size = parseInt(Size) || 10
+        const offsetLeft = (page - 1) * size
         name = name ? name : ''
-        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_user WHERE nickname LIKE '%${name}%'`)
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_user WHERE nickname LIKE '%${name}%' LIMIT ?,?`, [offsetLeft, size])
+        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_user WHERE nickname LIKE '%${name}%'`)
         rows.forEach(item => {
-            item.nickname = Buffer.from(item.nickname,'base64').toString()
+            item.nickname = Buffer.from(item.nickname, 'base64').toString()
         });
-        return rows
+        return { data: rows, count: count[0]['count'] }
     },
-    async showSetting(){
+    async showSetting() {
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_show_settings`);
         return rows
     },
-    async ad(){
+    async ad() {
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_ad WHERE is_delete = 0`)
         return rows
     },
-    async notice(){
+    async notice() {
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_notice`)
         return rows
     },
-    async super(){
+    async super() {
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_admin WHERE is_delete = 0`)
         return rows
     }
