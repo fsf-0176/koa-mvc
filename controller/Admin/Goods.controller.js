@@ -13,5 +13,10 @@ module.exports = {
     async specification(ctx) {
         const result = await goodsService.specification()
         ctx.body = result
+    },
+    async drop(ctx) {
+        const { page, name, size } = ctx.query
+        const result = await goodsService.drop({ page, name, size })
+        ctx.body = result
     }
 }

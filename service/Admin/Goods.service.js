@@ -1,13 +1,16 @@
 const { goodsModel } = require('../../model')
 
 module.exports = {
-    index(data){
+    index(data) {
         return goodsModel.index(data)
     },
-    category(){
+    category() {
         return goodsModel.category()
     },
-    specification(){
+    specification() {
         return goodsModel.specification()
+    },
+    drop(data) {
+        return goodsModel.drop(data)
     }
 }
