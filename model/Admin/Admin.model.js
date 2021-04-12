@@ -1,6 +1,5 @@
 const { mysql } = require('../../database');
 const md5 = require('md5');
-const { user } = require('../../service/Admin/Admin.service');
 
 module.exports = {
     // 首页数据
@@ -67,14 +66,17 @@ module.exports = {
     },
     async ad() {
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_ad WHERE is_delete = 0`)
-        return rows
+        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_ad WHERE is_delete = 0`)
+        return { data: rows, count: count[0]['count'] }
     },
     async notice() {
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_notice`)
-        return rows
+        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_notice`)
+        return { data: rows, count: count[0]['count'] }
     },
     async super() {
         const [rows] = await mysql().execute(`SELECT * FROM hiolabs_admin WHERE is_delete = 0`)
-        return rows
+        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_admin WHERE is_delete = 0`)
+        return { data: rows, count: count[0]['count'] }
     }
 }
