@@ -12,5 +12,11 @@ module.exports = {
     },
     drop(data) {
         return goodsModel.drop(data)
+    },
+    out(data) {
+        return goodsModel.out(data)
+    },
+    onsale(data) {
+        return goodsModel.onsale(data)
     }
 }

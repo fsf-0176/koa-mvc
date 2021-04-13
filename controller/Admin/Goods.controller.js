@@ -18,5 +18,15 @@ module.exports = {
         const { page, name, size } = ctx.query
         const result = await goodsService.drop({ page, name, size })
         ctx.body = result
+    },
+    async out(ctx) {
+        const { page, name, size } = ctx.query
+        const result = await goodsService.out({ page, name, size })
+        ctx.body = result
+    },
+    async onsale(ctx) {
+        const { page, name, size } = ctx.query
+        const result = await goodsService.onsale({ page, name, size })
+        ctx.body = result
     }
 }
