@@ -2,7 +2,7 @@ const { mysql } = require('../../database')
 
 module.exports = {
     async index(data) {
-        let { page, name, size: Size } = data
+        let { page, name = '', size: Size } = data
         page = parseInt(page) || 1
         const size = parseInt(Size) || 10
         const offsetLeft = (page - 1) * size
@@ -100,15 +100,16 @@ module.exports = {
         return { data: rows, count: count[0]['count'] }
     },
     async onsale(data) {
-        let { page, size: Size } = data
+        let { page, size: Size, name = '' } = data
         page = parseInt(page) || 1
         const size = parseInt(Size) || 10
         const offsetLeft = (page - 1) * size
-        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_goods WHERE is_delete = ? AND is_on_sale = ? LIMIT ?,?`, [0, 1, offsetLeft, size])
-        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_goods WHERE is_delete = ? AND is_on_sale = ?`, [0, 1])
+        console.log(name);
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_goods WHERE name LIKE '%${name}%' AND is_delete = ? AND is_on_sale = ? LIMIT ?,?`, [ 0, 1, offsetLeft, size])
+        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_goods WHERE name LIKE '%${name}%' AND is_delete = ? AND is_on_sale = ?`, [ 0, 1])
         for (const item of rows) {
             const [info] = await mysql().execute(`SELECT * FROM hiolabs_category WHERE id = ? LIMIT ?`, [item.category_id, 1])
-          
+
             item.category_name = info.name
             if (item.is_on_sale == 1) {
                 item.is_on_sale = true;
