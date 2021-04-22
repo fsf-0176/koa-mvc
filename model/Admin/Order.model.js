@@ -3,9 +3,9 @@ const { mysql } = require('../../database')
 module.exports = {
     async index(data) {
         const { orderSn = '', consignee = '', status = '101,801' } = data
-        console.log(status);
+        console.log(data);
         try {
-            const [rows] = await mysql().execute(`SELECT * FROM hiolabs_order WHERE order_status IN (?) AND order_type < ? AND order_sn LIKE '%${orderSn}%' AND consignee LIKE '%${consignee}%'`, [status, 7])
+            const [rows] = await mysql().execute(`SELECT * FROM hiolabs_order WHERE order_sn LIKE '%${orderSn}%' AND consignee LIKE '%${consignee}%' AND order_status IN (?) AND order_type < ? AND order_sn LIKE '%${orderSn}%' AND consignee LIKE '%${consignee}%'`, [status, 7])
             for (const item of rows) {
                 const [goodsList] = await mysql().execute(`SELECt goods_name,goods_aka,list_pic_url,number,goods_specifition_name_value,retail_price FROM hiolabs_order_goods WHERE order_id = ? AND is_delete = ?`, [item.id, 0])
                 item.goodsList = goodsList
