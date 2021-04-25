@@ -9,5 +9,7 @@ router.get('/admin/specification',goodsController.specification)
 router.get('/admin/drop', goodsController.drop)
 router.get('/admin/out', goodsController.out)
 router.get('/admin/onsale', goodsController.onsale)
+router.post('/admin/setGoodsStatus',goodsController.setGoodsStatus)
+router.post('/admin/delGoods',goodsController.delGoods)
 
 module.exports = router

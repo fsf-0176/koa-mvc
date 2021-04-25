@@ -105,8 +105,8 @@ module.exports = {
         const size = parseInt(Size) || 10
         const offsetLeft = (page - 1) * size
         console.log(name);
-        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_goods WHERE name LIKE '%${name}%' AND is_delete = ? AND is_on_sale = ? LIMIT ?,?`, [ 0, 1, offsetLeft, size])
-        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_goods WHERE name LIKE '%${name}%' AND is_delete = ? AND is_on_sale = ?`, [ 0, 1])
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_goods WHERE name LIKE '%${name}%' AND is_delete = ? AND is_on_sale = ? LIMIT ?,?`, [0, 1, offsetLeft, size])
+        const [count] = await mysql().execute(`SELECT count(id) as count FROM hiolabs_goods WHERE name LIKE '%${name}%' AND is_delete = ? AND is_on_sale = ?`, [0, 1])
         for (const item of rows) {
             const [info] = await mysql().execute(`SELECT * FROM hiolabs_category WHERE id = ? LIMIT ?`, [item.category_id, 1])
 
@@ -130,5 +130,16 @@ module.exports = {
             item.product = product;
         }
         return { data: rows, count: count[0]['count'] }
+    },
+    async setGoodsStatus(data) {
+        const { id, type, status } = data
+        const [rows] = await mysql().execute(`UPDATE hiolabs_goods SET ${type} = ${status} WHERE id = ${id}`)
+        return { data: rows }
+    },
+    async delGoods(data) {
+        const { id } = data
+        const [rows] = await mysql().execute(`DELETE FROM hiolabs_goods WHERE id = ?`, [id])
+        rows['id'] = id
+        return { data: rows }
     }
 }

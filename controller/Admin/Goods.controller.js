@@ -1,3 +1,4 @@
+const { delGoods } = require('../../model/Admin/Goods.model')
 const { goodsService } = require('../../service')
 
 module.exports = {
@@ -27,6 +28,16 @@ module.exports = {
     async onsale(ctx) {
         const { page, name, size } = ctx.query
         const result = await goodsService.onsale({ page, name, size })
+        ctx.body = result
+    },
+    async setGoodsStatus(ctx) {
+        const { id, type, status } = ctx.request.body
+        const result = await goodsService.setGoodsStatus({ id, type, status })
+        ctx.body = result
+    },
+    async delGoods(ctx) {
+        const { id } = ctx.request.body
+        const result = await goodsService.delGoods({ id })
         ctx.body = result
     }
 }

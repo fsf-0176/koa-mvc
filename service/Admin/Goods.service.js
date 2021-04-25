@@ -18,5 +18,11 @@ module.exports = {
     },
     onsale(data) {
         return goodsModel.onsale(data)
+    },
+    setGoodsStatus(data) {
+        return goodsModel.setGoodsStatus(data)
+    },
+    delGoods(data) {
+        return goodsModel.delGoods(data)
     }
 }
