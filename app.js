@@ -8,7 +8,7 @@ const app = new Koa()
 const koaBody = require('koa-body')
 const { SECRET, port, verifyPath } = require('./config')
 const a = require('./database/import')
-a()
+// a()
 initDb()
 // 做你需要判断的事情
 app.use(koaBody());

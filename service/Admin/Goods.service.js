@@ -24,5 +24,8 @@ module.exports = {
     },
     delGoods(data) {
         return goodsModel.delGoods(data)
+    },
+    setOrder(data) {
+        return goodsModel.setOrder(data)
     }
 }

@@ -11,5 +11,6 @@ router.get('/admin/out', goodsController.out)
 router.get('/admin/onsale', goodsController.onsale)
 router.post('/admin/setGoodsStatus',goodsController.setGoodsStatus)
 router.post('/admin/delGoods',goodsController.delGoods)
+router.post('/admin/setOrder',goodsController.setOrder)
 
 module.exports = router

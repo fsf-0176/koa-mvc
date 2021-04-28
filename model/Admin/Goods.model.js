@@ -141,5 +141,12 @@ module.exports = {
         const [rows] = await mysql().execute(`DELETE FROM hiolabs_goods WHERE id = ?`, [id])
         rows['id'] = id
         return { data: rows }
+    },
+    async setOrder(data) {
+        const { id, order } = data
+        const [rows] = await mysql().execute(`UPDATE hiolabs_goods SET sort_order = ${order} WHERE id = ${id}`)
+        rows['order'] = order
+        rows['id'] = id
+        return { data: rows }
     }
 }
