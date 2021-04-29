@@ -44,5 +44,10 @@ module.exports = {
         const { id, order } = ctx.request.body
         const result = await goodsService.setOrder({ id, order })
         ctx.body = result
+    },
+    async delNoticeSetting(ctx) {
+        const { id } = ctx.request.body
+        const result = await goodsService.delNoticeSetting({ id })
+        ctx.body = result
     }
 }

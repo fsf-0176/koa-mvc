@@ -27,5 +27,8 @@ module.exports = {
     },
     setOrder(data) {
         return goodsModel.setOrder(data)
+    },
+    delNoticeSetting(data) {
+        return goodsModel.delNoticeSetting(data)
     }
 }

@@ -148,5 +148,11 @@ module.exports = {
         rows['order'] = order
         rows['id'] = id
         return { data: rows }
+    },
+    async delNoticeSetting(data) {
+        const { id } = data
+        const [rows] = await mysql().execute(`DELETE FROM hiolabs_notice WHERE id = ${id}`)
+        rows['id'] = id
+        return { data: rows }
     }
 }
