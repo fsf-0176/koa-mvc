@@ -13,7 +13,6 @@ initDb()
 // 做你需要判断的事情
 app.use(koaBody());
 app.use(async (ctx, next) => {
-
   if (ctx.header) {
     await next().catch(err => {
       console.log(err);
