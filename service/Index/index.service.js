@@ -6,5 +6,8 @@ module.exports = {
     },
     goods(data) {
         return indexModel.goods(data)
+    },
+    goodsDetail(data) {
+        return indexModel.goodsDetail(data)
     }
 }

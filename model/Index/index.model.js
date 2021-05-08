@@ -13,5 +13,11 @@ module.exports = {
             result[id] = rows
         }
         return result
+    },
+    async goodsDetail(data) {
+        const { id } = data
+        const [rows] = await mysql().execute(`SELECT * FROM hiolabs_goods WHERE id = ${id}`)
+        const [spe] = await mysql().execute(`SELECT id,value FROM hiolabs_goods_specification WHERE goods_id = ${id}`)
+        return [Object.assign(rows[0], { spe })]
     }
 }
